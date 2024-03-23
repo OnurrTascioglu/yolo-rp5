@@ -24,9 +24,11 @@ class StepController():
     """
     current_direction_horizontal = IDLE
     current_direction_vertical = IDLE
+    run_flag = False
 
     def __init__(self) -> None:
         self.kit = MotorKit(i2c=board.I2C())
+        self.run_flag = True
 
     def move_left(self, step):
         print("Moving left")
@@ -64,8 +66,11 @@ class StepController():
         self.current_direction_horizontal = direction_x
         self.current_direction_vertical = direction_y
     
+    def set_run_flag(self, flag):
+        self.run_flag = flag
+    
     def move(self):
-        while True:
+        while self.run_flag:
             if self.current_direction_horizontal == LEFT:
                 self.move_left(step=stepper.SINGLE)
             elif self.current_direction_horizontal == RIGHT:
