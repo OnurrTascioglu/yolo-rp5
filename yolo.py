@@ -37,6 +37,7 @@ while True:
             boxes = r.boxes
 
             if len(boxes) != 1:
+                step_controller.set_directions(IDLE, IDLE)
                 continue
 
             for box in boxes:
