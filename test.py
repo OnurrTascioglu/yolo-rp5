@@ -2,19 +2,23 @@ import threading
 import sys
 import time
 from constants import *
+from adafruit_motor import stepper
 from step_controller import StepController
 
 
 step_controller = StepController()
-motor_thread = threading.Thread(target=step_controller.move)
-motor_thread.start()
+# motor_thread = threading.Thread(target=step_controller.move)
+# motor_thread.start()
 
 if sys.argv[1] == "--left":
-    step_controller.set_directions(LEFT, IDLE)
-    time.sleep(2)
+    for i in range(10):
+        step_controller.move_left(stepper.DOUBLE)
+        time.sleep(0.1)
 
-elif sys.argv[1] == "--right":
-    step_controller.set_directions(RIGHT, IDLE)
-    time.sleep(2)
+if sys.argv[1] == "--right":
+    for i in range(10):
+        step_controller.move_right(stepper.DOUBLE)
+        time.sleep(0.1)
 
 step_controller.set_run_flag(False)
+step_controller.release()
