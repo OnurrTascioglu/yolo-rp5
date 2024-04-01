@@ -20,5 +20,15 @@ if sys.argv[1] == "--right":
         step_controller.move_right(stepper.DOUBLE)
         time.sleep(0.1)
 
+if sys.argv[1] == "--up":
+    for i in range(10):
+        step_controller.move_up(stepper.DOUBLE)
+        time.sleep(0.1)
+
+if sys.argv[1] == "--down":
+    for i in range(10):
+        step_controller.move_down(stepper.DOUBLE)
+        time.sleep(0.1)
+
 step_controller.set_run_flag(False)
 step_controller.release()
