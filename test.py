@@ -10,21 +10,24 @@ import board
 kit = MotorKit(i2c=board.I2C())
 
 if sys.argv[1] == "--left":
-    for i in range(10):
+    for i in range(500):
         kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 if sys.argv[1] == "--right":
-    for i in range(10):
+    for i in range(500):
         kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 if sys.argv[1] == "--up":
-    for i in range(10):
+    for i in range(500):
         kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 if sys.argv[1] == "--down":
-    for i in range(10):
+    for i in range(500):
         kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
+
+kit.stepper1.release()
+kit.stepper2.release()

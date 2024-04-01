@@ -75,6 +75,7 @@ while True:
         cv2.imshow('Webcam', img)
         if cv2.waitKey(1) == ord('q'):
             step_controller.set_run_flag(False)
+            step_controller.release()
             cap.release()
             cv2.destroyAllWindows()
             break
