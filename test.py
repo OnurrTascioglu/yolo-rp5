@@ -13,22 +13,22 @@ kit.frequency = 1600
 if sys.argv[1] == "--left":
     for i in range(200):
         kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 if sys.argv[1] == "--right":
     for i in range(200):
         kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.SINGLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 if sys.argv[1] == "--up":
     for i in range(200):
         kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 if sys.argv[1] == "--down":
     for i in range(200):
         kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.SINGLE)
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 kit.stepper1.release()
 kit.stepper2.release()
