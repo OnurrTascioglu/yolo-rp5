@@ -8,7 +8,7 @@ from adafruit_motorkit import MotorKit
 import board
 
 kit = MotorKit(i2c=board.I2C())
-kit.frequency = 1600
+kit.frequency = 3200
 
 if sys.argv[1] == "--left":
     for i in range(2000):
