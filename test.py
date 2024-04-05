@@ -1,10 +1,14 @@
 import time
 from adafruit_motorkit import MotorKit
+import board
 
-kit = MotorKit()
+i2c = board.I2C()
+# kit = MotorKit(i2c = i2c)
 
-for i in range(100):
-    kit.stepper1.onestep()
+adresses = i2c.scan()
+print("Bulunan cihazlar:")
+for adress in adresses:
+    print("adresses",hex(adress))
 
 # import sys
 # import time
