@@ -1,52 +1,44 @@
+import sys
 import time
+import atexit
+from constants import *
+from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_StepperMotor
 from adafruit_motorkit import MotorKit
-import board
 
-i2c = board.I2C()
-# kit = MotorKit(i2c = i2c)
+# create a default object, no changes to I2C address or frequency
+mh = Adafruit_MotorHAT(addr=0x70,freq=60)
 
-adresses = i2c.scan()
-print("Bulunan cihazlar:")
-for adress in adresses:
-    print("adresses",hex(adress))
+def turnOffMotors():
+    mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
-# import sys
-# import time
-# import atexit
-# from constants import *
-# from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_StepperMotor
-# from adafruit_motorkit import MotorKit
+atexit.register(turnOffMotors)
 
-# # create a default object, no changes to I2C address or frequency
-# # mh = Adafruit_MotorHAT(addr=112,freq=60)
+# myStepper = mh.getStepper(200, 1)
+# myStepper.setSpeed(30)
 
-# # def turnOffMotors():
-# #     mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-# #     mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-# #     mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-# #     mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+# print("Single coil steps")
+# myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+# myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
-# # atexit.register(turnOffMotors)
+# print("Double coil steps")
+# myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+# myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
-# # myStepper = mh.getStepper(200, 1)
-# # myStepper.setSpeed(30)
+# print("Interleaved coil steps")
+# myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+# myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.INTERLEAVE)
 
-# # while (True):
-# #     print("Single coil steps")
-# #     myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
-# #     myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
+# print("Microsteps")
+# myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
+# myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.MICROSTEP)
 
-# #     print("Double coil steps")
-# #     myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-# #     myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+# atexit.register(turnOffMotors)
 
-# #     print("Interleaved coil steps")
-# #     myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-# #     myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.INTERLEAVE)
 
-# #     print("Microsteps")
-# #     myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
-# #     myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.MICROSTEP)
+
 
 # if sys.argv[1] == "--left":
 #     for i in range(2000):
