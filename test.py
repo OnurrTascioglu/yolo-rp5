@@ -4,9 +4,10 @@ import atexit
 from constants import *
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_StepperMotor
 
+from adafruit_motorkit import MotorKit
 
 # create a default object, no changes to I2C address or frequency
-mh = Adafruit_MotorHAT(freq=60)
+mh = Adafruit_MotorHAT(addr=0x02,freq=60)
 
 # def turnOffMotors():
 #     mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
