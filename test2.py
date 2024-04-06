@@ -6,8 +6,10 @@ direction_pin = gpiozero.OutputDevice(20)
 
 step_pin.off()
 
-steps = 200
+steps = 2000
 
+print("Single coil steps")
+print("Steps: ", steps)
 direction_pin.on()
 for _ in range(steps):
     step_pin.on()
