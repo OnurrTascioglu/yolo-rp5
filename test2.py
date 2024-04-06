@@ -1,8 +1,8 @@
 import time
 import gpiozero
 
-step_pin = gpiozero.OutputDevice(8)
-direction_pin = gpiozero.OutputDevice(7)
+step_pin = gpiozero.OutputDevice(26)
+direction_pin = gpiozero.OutputDevice(24)
 
 step_pin.off()
 
