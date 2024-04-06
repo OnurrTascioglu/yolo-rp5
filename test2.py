@@ -1,32 +1,23 @@
-from time import sleep
-import RPi.GPIO as GPIO
+import time
+import gpiozero
 
-DIR = 20   # Direction GPIO Pin
-STEP = 21  # Step GPIO Pin
-CW = 1     # Clockwise Rotation
-CCW = 0    # Counterclockwise Rotation
-SPR = 48   # Steps per Revolution (360 / 7.5)
+step_pin = gpiozero.OutputDevice(21)
+direction_pin = gpiozero.OutputDevice(20)
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(DIR, GPIO.OUT)
-GPIO.setup(STEP, GPIO.OUT)
-GPIO.output(DIR, CW)
+step_pin.off()
 
-step_count = SPR
-delay = .0208
+steps = 200
 
-for x in range(step_count):
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
+direction_pin.on()
+for _ in range(steps):
+    step_pin.on()
+    time.sleep(0.001)
+    step_pin.off()
+    time.sleep(0.001)
 
-sleep(.5)
-GPIO.output(DIR, CCW)
-for x in range(step_count):
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
-
-GPIO.cleanup()
+direction_pin.off()
+for _ in range(steps):
+    step_pin.on()
+    time.sleep(0.001)
+    step_pin.off()
+    time.sleep(0.001)
