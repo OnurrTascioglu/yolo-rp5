@@ -1,12 +1,12 @@
 import time
 import gpiozero
 
-step_pin = gpiozero.OutputDevice(21)
-direction_pin = gpiozero.OutputDevice(20)
+step_pin = gpiozero.OutputDevice(24)
+direction_pin = gpiozero.OutputDevice(23)
 
 step_pin.off()
 
-steps = 2000
+steps = 200
 
 print("Single coil steps")
 print("Steps: ", steps)
