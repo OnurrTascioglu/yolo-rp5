@@ -23,9 +23,9 @@ class StepController():
     """
     current_direction_horizontal = IDLE
     current_direction_vertical = IDLE
-    direction_pin_horizontal = None
+    direction_pin_horizontal = gpiozero.OutputDevice(20)
     direction_pin_vertical = None
-    step_pin_horizontal = None
+    step_pin_horizontal = gpiozero.OutputDevice(21)
     step_pin_vertical = None
     step_wait_time = 0.04
     run_flag = False
@@ -67,11 +67,11 @@ class StepController():
     
     def release_vertical(self):
         print("Releasing vertical")
-        self.step_pin_vertical.off()
+        # self.step_pin_vertical.off()
 
     def release(self):
         self.step_pin_horizontal.off()
-        self.step_pin_vertical.off()
+        # self.step_pin_vertical.off()
     
     def set_directions(self, direction_x, direction_y):
         self.current_direction_horizontal = direction_x
