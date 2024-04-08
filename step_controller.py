@@ -1,7 +1,6 @@
 import time
-import board
-from adafruit_motor import stepper
-from adafruit_motorkit import MotorKit
+import time
+import gpiozero
 from constants import *
 
 
@@ -24,43 +23,55 @@ class StepController():
     """
     current_direction_horizontal = IDLE
     current_direction_vertical = IDLE
+    direction_pin_horizontal = None
+    direction_pin_vertical = None
+    step_pin_horizontal = None
+    step_pin_vertical = None
+    step_wait_time = 0.04
     run_flag = False
 
     def __init__(self) -> None:
-        self.kit = MotorKit(i2c=board.I2C())
+        self.direction_pin_horizontal = gpiozero.OutputDevice(20)
+        self.step_pin_horizontal = gpiozero.OutputDevice(21)
         self.run_flag = True
 
-    def move_left(self, step):
+    def move_left(self):
         print("Moving left")
-        self.kit.stepper1.onestep(direction=stepper.FORWARD, style=step)
-        time.sleep(0.01)
+        self.direction_pin_horizontal.on()
+        self.step_pin_horizontal.on()
+        time.sleep(self.step_wait_time)
+        self.step_pin_horizontal.off()
+        time.sleep(self.step_wait_time)
     
-    def move_right(self, step):
+    def move_right(self):
         print("Moving right")
-        self.kit.stepper1.onestep(direction=stepper.BACKWARD, style=step)
-        time.sleep(0.01)
+        self.direction_pin_horizontal.off()
+        self.step_pin_horizontal.on()
+        time.sleep(self.step_wait_time)
+        self.step_pin_horizontal.off()
+        time.sleep(self.step_wait_time)
     
-    def move_up(self, step):
+    def move_up(self):
         print("Moving up")
-        self.kit.stepper2.onestep(direction=stepper.FORWARD, style=step)
+        #self.kit.stepper2.onestep(direction=stepper.FORWARD, style=step)
         time.sleep(0.01)
     
-    def move_down(self, step):
+    def move_down(self):
         print("Moving down")
-        self.kit.stepper2.onestep(direction=stepper.BACKWARD, style=step)
+        #self.kit.stepper2.onestep(direction=stepper.BACKWARD, style=step)
         time.sleep(0.01)
 
     def release_horizontal(self):
         print("Releasing horizontal")
-        self.kit.stepper1.release()
+        self.step_pin_horizontal.off()
     
     def release_vertical(self):
         print("Releasing vertical")
-        self.kit.stepper2.release()
+        self.step_pin_vertical.off()
 
     def release(self):
-        self.kit.stepper1.release()
-        self.kit.stepper2.release()
+        self.step_pin_horizontal.off()
+        self.step_pin_vertical.off()
     
     def set_directions(self, direction_x, direction_y):
         self.current_direction_horizontal = direction_x
@@ -72,16 +83,16 @@ class StepController():
     def move(self):
         while self.run_flag:
             if self.current_direction_horizontal == LEFT:
-                self.move_left(step=stepper.SINGLE)
+                self.move_left()
             elif self.current_direction_horizontal == RIGHT:
-                self.move_right(step=stepper.SINGLE)
+                self.move_right()
             elif self.current_direction_horizontal == IDLE:
                 self.release_horizontal()
         
             if  self.current_direction_vertical == UP:
-                self.move_up(step=stepper.SINGLE)
+                self.move_up()
             elif  self.current_direction_vertical == DOWN:
-                self.move_down(step=stepper.SINGLE)
+                self.move_down()
             elif  self.current_direction_vertical == IDLE:
                 self.release_vertical()
             time.sleep(0.01)
