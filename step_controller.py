@@ -27,7 +27,7 @@ class StepController():
     direction_pin_vertical = None
     step_pin_horizontal = gpiozero.OutputDevice(21)
     step_pin_vertical = None
-    step_wait_time = 0.015
+    step_wait_time = 0.0075
     run_flag = False
 
     def __init__(self) -> None:
