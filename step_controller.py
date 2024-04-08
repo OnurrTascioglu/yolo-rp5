@@ -31,8 +31,6 @@ class StepController():
     run_flag = False
 
     def __init__(self) -> None:
-        self.direction_pin_horizontal = gpiozero.OutputDevice(20)
-        self.step_pin_horizontal = gpiozero.OutputDevice(21)
         self.run_flag = True
 
     def move_left(self):
@@ -62,11 +60,11 @@ class StepController():
         time.sleep(0.01)
 
     def release_horizontal(self):
-        print("Releasing horizontal")
+        pass
         self.step_pin_horizontal.off()
     
     def release_vertical(self):
-        print("Releasing vertical")
+        pass
         # self.step_pin_vertical.off()
 
     def release(self):
