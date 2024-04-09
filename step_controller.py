@@ -51,23 +51,30 @@ class StepController():
     
     def move_up(self):
         print("Moving up")
-        #self.kit.stepper2.onestep(direction=stepper.FORWARD, style=step)
-        time.sleep(0.01)
+        #self.direction_pin_horizontal.on()
+        #self.step_pin_horizontal.on()
+        #time.sleep(self.step_wait_time)
+        #self.step_pin_horizontal.off()
+        #time.sleep(self.step_wait_time)
     
     def move_down(self):
         print("Moving down")
-        #self.kit.stepper2.onestep(direction=stepper.BACKWARD, style=step)
-        time.sleep(0.01)
+        #self.direction_pin_horizontal.off()
+        #self.step_pin_horizontal.on()
+        #time.sleep(self.step_wait_time)
+        #self.step_pin_horizontal.off()
+        #time.sleep(self.step_wait_time)
 
     def release_horizontal(self):
         pass
-        self.step_pin_horizontal.off()
+        # self.step_pin_horizontal.off()
     
     def release_vertical(self):
         pass
         # self.step_pin_vertical.off()
 
     def release(self):
+        pass
         self.step_pin_horizontal.off()
         # self.step_pin_vertical.off()
     
@@ -111,13 +118,13 @@ class StepController():
         vertical = IDLE
 
         ## check if the object is within the target lock threshold
-        if abs(mid_x - CENTER_X) > TARGET_LOCK_THRESHOLD_PIXELS:
+        if abs(mid_x - CENTER_X) > TARGET_LOCK_THRESHOLD_PIXELS_HORIZONTAL:
             if mid_x < CENTER_X:
                 horizontal = LEFT
             elif mid_x > CENTER_X:
                 horizontal = RIGHT
 
-        if abs(mid_y - CENTER_Y) > TARGET_LOCK_THRESHOLD_PIXELS:
+        if abs(mid_y - CENTER_Y) > TARGET_LOCK_THRESHOLD_PIXELS_VERTICAL:
             if mid_y < CENTER_Y:
                 vertical = UP
             elif mid_y > CENTER_Y:
