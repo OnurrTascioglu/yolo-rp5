@@ -14,3 +14,14 @@ RIGHT = 1
 UP = 0
 DOWN = 1
 IDLE = None
+
+## GPIO pins
+TRIGGER_PIN = 4
+ECHO_PIN = 18
+
+## Pin Timers
+TRIGGER_TIME = 0.0001
+
+## Constants 
+DISTANCE_DIV_CONST = 0.000058
+LIDAR_MAX_HZ = 1000

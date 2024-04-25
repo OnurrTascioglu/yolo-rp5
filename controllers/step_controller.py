@@ -1,8 +1,6 @@
 import time
-import time
 import gpiozero
-from constants import *
-
+from utils.constants import *
 
 class StepController():
     """

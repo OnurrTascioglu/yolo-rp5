@@ -3,8 +3,8 @@ import time
 import threading
 import numpy as np
 from ultralytics import YOLO
-from constants import *
-from step_controller import StepController
+from utils.constants import *
+from controllers.step_controller import StepController
 
 # model = YOLO("yolo-Weights/yolov8n.pt")
 # model = YOLO("yolo-Weights/yolov8n_float32.tflite")
