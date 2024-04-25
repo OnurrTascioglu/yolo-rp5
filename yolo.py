@@ -1,12 +1,23 @@
 import cv2
 import time
 import threading
+import numpy as np
 from ultralytics import YOLO
 from constants import *
 from step_controller import StepController
 
+# model = YOLO("yolo-Weights/yolov8n.pt")
+# model = YOLO("yolo-Weights/yolov8n_float32.tflite")
+# model = YOLO("yolo-Weights/yolov8n_float16.tflite")
+# model = YOLO("yolo-Weights/yolov8n_int8.tflite")
+# model = YOLO("yolo-Weights/yolov8n_integer_quant.tflite")
+model = YOLO("yolo-Weights/yolov8n_full_integer_quant.tflite")
+time.sleep(15)
 
-model = YOLO("yolo-Weights/yolov8n.pt")
+## R&D models
+# model = YOLO("yolo-Weights/yolov8-n-voc_coco-pruned48.onnx")
+# model = YOLO("yolo-Weights/yolov8-n-coco-base_quantized.onnx")
+# model = YOLO("yolo-Weights/yolov8-n-voc_coco-pruned48_quantized.onnx")
 
 def capture_and_set(width, height):
     cap = cv2.VideoCapture(0)
@@ -51,7 +62,6 @@ while True:
             # put box in cam
             cv2.rectangle(img, (x1, y1), (x2, y2), BB_COLOR, 3)
 
-
         end = time.time()
         fps = int(1/(end-start))
         if fps < 5:
@@ -64,6 +74,7 @@ while True:
             step_controller.release()
             cap.release()
             cv2.destroyAllWindows()
+            motor_thread.join()
             break
     except Exception as e:
         print(e)

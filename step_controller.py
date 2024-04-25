@@ -24,17 +24,16 @@ class StepController():
     current_direction_horizontal = IDLE
     current_direction_vertical = IDLE
     direction_pin_horizontal = gpiozero.OutputDevice(20)
-    direction_pin_vertical = None
+    direction_pin_vertical = gpiozero.OutputDevice(5)
     step_pin_horizontal = gpiozero.OutputDevice(21)
-    step_pin_vertical = None
-    step_wait_time = 0.0075 ## default == 0.0075
+    step_pin_vertical = gpiozero.OutputDevice(6)
+    step_wait_time = 0.001 ## default == 0.0075
     run_flag = False
 
     def __init__(self) -> None:
         self.run_flag = True
 
     def move_left(self):
-        print("Moving left")
         self.direction_pin_horizontal.on()
         self.step_pin_horizontal.on()
         time.sleep(self.step_wait_time)
@@ -42,7 +41,6 @@ class StepController():
         time.sleep(self.step_wait_time)
     
     def move_right(self):
-        print("Moving right")
         self.direction_pin_horizontal.off()
         self.step_pin_horizontal.on()
         time.sleep(self.step_wait_time)
@@ -50,35 +48,31 @@ class StepController():
         time.sleep(self.step_wait_time)
     
     def move_up(self):
-        print("Moving up")
-        #self.direction_pin_horizontal.on()
-        #self.step_pin_horizontal.on()
-        #time.sleep(self.step_wait_time)
-        #self.step_pin_horizontal.off()
-        #time.sleep(self.step_wait_time)
+        self.direction_pin_vertical.off()
+        self.step_pin_vertical.on()
+        time.sleep(self.step_wait_time)
+        self.step_pin_vertical.off()
+        time.sleep(self.step_wait_time)
     
     def move_down(self):
-        print("Moving down")
-        #self.direction_pin_horizontal.off()
-        #self.step_pin_horizontal.on()
-        #time.sleep(self.step_wait_time)
-        #self.step_pin_horizontal.off()
-        #time.sleep(self.step_wait_time)
+        self.direction_pin_vertical.on()
+        self.step_pin_vertical.on()
+        time.sleep(self.step_wait_time)
+        self.step_pin_vertical.off()
+        time.sleep(self.step_wait_time)
 
     def release_horizontal(self):
-        pass
-        # self.step_pin_horizontal.off()
+        self.step_pin_horizontal.off()
     
     def release_vertical(self):
-        pass
-        # self.step_pin_vertical.off()
+        self.step_pin_vertical.off()
 
     def release(self):
-        pass
         self.step_pin_horizontal.off()
-        # self.step_pin_vertical.off()
+        self.step_pin_vertical.off()
     
     def set_directions(self, direction_x, direction_y):
+        print(f"Moving to {direction_x}, {direction_y}")
         self.current_direction_horizontal = direction_x
         self.current_direction_vertical = direction_y
     
@@ -103,7 +97,7 @@ class StepController():
                 self.move_down()
             elif  self.current_direction_vertical == IDLE:
                 self.release_vertical()
-            time.sleep(0.01)
+            time.sleep(0.025)
 
     @staticmethod
     def get_stepper_next_directions(mid_x, mid_y):
