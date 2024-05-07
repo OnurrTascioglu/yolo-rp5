@@ -21,10 +21,10 @@ class StepController():
     """
     current_direction_horizontal = IDLE
     current_direction_vertical = IDLE
-    direction_pin_horizontal = gpiozero.OutputDevice(20)
-    direction_pin_vertical = gpiozero.OutputDevice(5)
-    step_pin_horizontal = gpiozero.OutputDevice(21)
-    step_pin_vertical = gpiozero.OutputDevice(6)
+    direction_pin_horizontal = gpiozero.OutputDevice(DIR_PIN_HOR)
+    direction_pin_vertical = gpiozero.OutputDevice(DIR_PIN_VER)
+    step_pin_horizontal = gpiozero.OutputDevice(STEP_PIN_HOR)
+    step_pin_vertical = gpiozero.OutputDevice(STEP_PIN_VER)
     step_wait_time = 0.001 ## default == 0.0075
     run_flag = False
 
