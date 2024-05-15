@@ -98,6 +98,19 @@ class StepController():
             time.sleep(0.025)
 
     @staticmethod
+    def change_direction(direction):
+        if direction == True:
+            direction_pin_horizontal.off()
+            print("Moving Right")
+            direction = False
+            return direction
+        if direction == False:
+            direction_pin_horizontal.on()
+            print("Moving Left")
+            direction = True
+            return direction
+
+    @staticmethod
     def get_stepper_next_directions(mid_x, mid_y):
         """
         Get the stepper motor direction based on the object's midpoint.
