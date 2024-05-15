@@ -1,5 +1,6 @@
 import time
 import serial
+import numpy as np
 from utils.constants import *
 
 
@@ -44,3 +45,15 @@ class LidarController:
         
     def get_temperature(self):
         return str(self.temperature)
+
+    @staticmethod
+    def find_object_angles(array:list):
+        array = np.array(array).astype(np.int16)
+        q1 = np.percentile(array, 25)
+
+        small_indexes = np.where(array < q1)[0]  ## get indexes
+        groups = np.split(small_indexes, np.where(np.diff(small_indexes) != 1)[0]+1)
+        max_group = max(groups, key=len)
+        mid_index = max_group[len(max_group)//2]
+        
+        return max_group[0], max_group[-1], mid_index

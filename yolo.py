@@ -30,8 +30,15 @@ def get_object_midpoints(x1, y1, x2, y2):
 
 cap = capture_and_set(IMAGE_WIDTH, IMAGE_HEIGHT)
 
-step_controller = StepController()
-motor_thread = threading.Thread(target=step_controller.move)
+stepper_horizontal = StepController(DIR_PIN_HOR,STEP_PIN_HOR)
+stepper_vertical = StepController(DIR_PIN_VER,STEP_PIN_VER)
+
+def move():
+    while True:
+        stepper_horizontal.move_by_direction()
+        stepper_vertical.move_by_direction()
+
+motor_thread = threading.Thread(target=move)
 motor_thread.start()
 
 while True:
@@ -47,7 +54,8 @@ while True:
         for r in results:
             boxes = r.boxes
             if len(boxes) != 1:
-                step_controller.set_directions(IDLE, IDLE)
+                stepper_horizontal.set_directions(IDLE, IDLE)
+                stepper_vertical.set_directions(IDLE, IDLE)
                 continue
             box = boxes[0]
             # bounding box
@@ -56,8 +64,9 @@ while True:
 
             ## yolo origin points (0,0) is top-letf of the image
             mid_x, mid_y = get_object_midpoints(x1, y1, x2, y2)
-            direction_x, direction_y = StepController.get_stepper_next_directions(mid_x, mid_y)
-            step_controller.set_directions(direction_x, direction_y)
+            direction_x, direction_y = StepController.get_turret_next_directions(mid_x, mid_y)
+            stepper_horizontal.set_directions(direction_x)
+            stepper_vertical.set_directions(direction_y)
 
             # put box in cam
             cv2.rectangle(img, (x1, y1), (x2, y2), BB_COLOR, 3)
@@ -65,13 +74,16 @@ while True:
         end = time.time()
         fps = int(1/(end-start))
         if fps < 5:
-            step_controller.set_directions(IDLE, IDLE)
+            stepper_horizontal.set_directions(IDLE, IDLE)
+            stepper_vertical.set_directions(IDLE, IDLE)
         cv2.putText(img, str(fps), (7, 70), cv2.FONT_HERSHEY_SIMPLEX, 3, (100, 255, 0), 3, cv2.LINE_AA)
 
         cv2.imshow('Webcam', img)
         if cv2.waitKey(1) == ord('q'):
-            step_controller.set_run_flag(False)
-            step_controller.release()
+            stepper_horizontal.set_run_flag(False)
+            stepper_horizontal.release()
+            stepper_vertical.set_run_flag(False)
+            stepper_vertical.release()
             cap.release()
             cv2.destroyAllWindows()
             motor_thread.join()
