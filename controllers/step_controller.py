@@ -65,6 +65,17 @@ class StepController():
             elif self.current_direction == IDLE:
                 self.release()
             time.sleep(sleep_time)
+    
+    def move_by_step(self, step)
+        for _ in range(0,step):
+            if self.current_direction == BACKWARD:
+                self.move_backward()
+            elif self.current_direction == FORWARD:
+                self.move_forward()
+            elif self.current_direction == IDLE:
+                self.release()
+            time.sleep(sleep_time)
+
 
     @staticmethod
     def get_turret_next_directions(mid_x, mid_y):
