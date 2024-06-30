@@ -47,7 +47,10 @@ class StepController():
     def release(self):
         self.step_pin.off()
     
-    def set_directions(self, direction):
+    def get_direction(self):
+        return self.current_direction
+
+    def set_direction(self, direction):
         self.current_direction = direction
     
     def set_speed(self, time):
@@ -66,7 +69,7 @@ class StepController():
                 self.release()
             time.sleep(sleep_time)
     
-    def move_by_step(self, step)
+    def move_by_step(self, step):
         for _ in range(0,step):
             if self.current_direction == BACKWARD:
                 self.move_backward()
@@ -74,8 +77,21 @@ class StepController():
                 self.move_forward()
             elif self.current_direction == IDLE:
                 self.release()
-            time.sleep(sleep_time)
+            time.sleep(0.05)
 
+    def turret_stepper_move(self, angle, motor_angle, step_multiplier=1):
+        counter = 0
+        step = angle / motor_angle
+        step = step * step_multiplier
+        while counter < step:
+            self.move_by_direction(0.001)
+            counter += 1
+
+    def change_direction(self):
+        if self.current_direction == FORWARD:
+            self.current_direction = BACKWARD
+        elif self.current_direction == BACKWARD:
+            self.current_direction = FORWARD
 
     @staticmethod
     def get_turret_next_directions(mid_x, mid_y):
